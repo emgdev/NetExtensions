@@ -66,6 +66,8 @@ namespace NetExtensions
         {
             var configurationBuilder = new ConfigurationBuilder();
 
+            configurationBuilder.SetBasePath(AppDomain.CurrentDomain.BaseDirectory);
+
             configurationBuilder.AddXmlFile("appsettings.xml", false, true);
 
             var configuration = configurationBuilder.Build();
@@ -75,9 +77,22 @@ namespace NetExtensions
 
         public static IConfigurationRoot EnvironmentVariables()
         {
+            /*
+            EMG_Hello=World
+            EMG_Foo__Bar=My Name
+            EMG_Ints__0=1
+            EMG_Ints__1=2
+            EMG_Foos__0__Bar=Renato
+            EMG_Foos__1__Bar=Golia
+            */
+
             var configurationBuilder = new ConfigurationBuilder();
 
-            configurationBuilder.AddEnvironmentVariables();
+            // includes all envs available to the process
+            //configurationBuilder.AddEnvironmentVariables();
+
+            // filters out all envs not starting with "EMG_"
+            configurationBuilder.AddEnvironmentVariables("EMG_");
 
             var configuration = configurationBuilder.Build();
 
@@ -98,6 +113,20 @@ namespace NetExtensions
                 ["--hello"] = "Hello",
                 ["--foo"] = "Foo:Bar"
             });
+
+            var configuration = configurationBuilder.Build();
+
+            return configuration;
+        }
+
+        public static IConfigurationRoot UserSecrets()
+        {
+            // to initialise your local store with values
+            // type .\appsettings.json | dotnet user-secrets set
+
+            var configurationBuilder = new ConfigurationBuilder();
+
+            configurationBuilder.AddUserSecrets<Program>();
 
             var configuration = configurationBuilder.Build();
 

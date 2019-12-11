@@ -30,6 +30,8 @@ namespace NetExtensions
 
                 Demo.FileIni => ConfigurationSamples.FileIni(),
 
+                Demo.UserSecrets => ConfigurationSamples.UserSecrets(),
+
                 _ => throw new NotSupportedException()
             };
 
@@ -50,5 +52,6 @@ namespace NetExtensions
         FileXml,
         FileJson,
         FileIni,
+        UserSecrets
     }
 }
