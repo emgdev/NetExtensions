@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <Hello>World</Hello>
+    <Foo>
+        <Bar>My Name</Bar>
+    </Foo>
+    <Ints name="0">1</Ints>
+    <Ints name="1">2</Ints>
+    <Foos>
+        <Bar name="0">Renato</Bar>
+        <Bar name="1">Golia</Bar>
+    </Foos>
+</configuration>

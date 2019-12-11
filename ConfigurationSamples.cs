@@ -4,18 +4,20 @@ using Microsoft.Extensions.Configuration;
 
 namespace NetExtensions
 {
-    public class ConfigurationSamples
+    public static class ConfigurationSamples
     {
-        public void Builder()
+        public static IConfigurationRoot BuilderOnly()
         {
             var configurationBuilder = new ConfigurationBuilder();
 
             // ... add providers
 
             var configuration = configurationBuilder.Build();
+
+            return configuration;
         }
 
-        public void InMemory()
+        public static IConfigurationRoot InMemory()
         {
             var configurationBuilder = new ConfigurationBuilder();
 
@@ -30,10 +32,74 @@ namespace NetExtensions
             });
 
             var configuration = configurationBuilder.Build();
+
+            return configuration;
         }
 
-        public void CommandLineArguments(string[] args)
+        public static IConfigurationRoot FileIni()
         {
+            var configurationBuilder = new ConfigurationBuilder();
+
+            configurationBuilder.SetBasePath(AppDomain.CurrentDomain.BaseDirectory);
+
+            configurationBuilder.AddIniFile("appsettings.ini", false, true);
+
+            var configuration = configurationBuilder.Build();
+
+            return configuration;
+        }
+
+        public static IConfigurationRoot FileJson()
+        {
+            var configurationBuilder = new ConfigurationBuilder();
+
+            configurationBuilder.SetBasePath(AppDomain.CurrentDomain.BaseDirectory);
+
+            configurationBuilder.AddJsonFile("appsettings.json", false, true);
+
+            var configuration = configurationBuilder.Build();
+
+            return configuration;
+        }
+
+        public static IConfigurationRoot FileXml()
+        {
+            var configurationBuilder = new ConfigurationBuilder();
+
+            configurationBuilder.AddXmlFile("appsettings.xml", false, true);
+
+            var configuration = configurationBuilder.Build();
+
+            return configuration;
+        }
+
+        public static IConfigurationRoot KeyPerFile()
+        {
+            var configurationBuilder = new ConfigurationBuilder();
+
+            // ... add providers
+
+            var configuration = configurationBuilder.Build();
+
+            return configuration;
+        }
+
+        public static IConfigurationRoot EnvironmentVariables()
+        {
+            var configurationBuilder = new ConfigurationBuilder();
+
+            configurationBuilder.AddEnvironmentVariables();
+
+            var configuration = configurationBuilder.Build();
+
+            return configuration;
+        }
+
+        public static IConfigurationRoot CommandLineArguments(string[] args)
+        {
+            // not reachable from Program due to incompatibility with McMaster.Extensions.CommandLineUtils
+            // dotnet run -- -h World --foo 'My Name'
+
             var configurationBuilder = new ConfigurationBuilder();
 
             configurationBuilder.AddCommandLine(args, new Dictionary<string, string>
@@ -46,6 +112,7 @@ namespace NetExtensions
 
             var configuration = configurationBuilder.Build();
 
+            return configuration;
         }
     }
 }
