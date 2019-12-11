@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 
-namespace StandardLogging
+
+namespace Loggly
 {
     class Program
     {
@@ -21,14 +19,12 @@ namespace StandardLogging
                     LogLevel = new
                     {
                         Default = "Trace"
-                    },
-                    Console = new
-                    {
-                        LogLevel = new Dictionary<string, string>
-                        {
-                            ["Microsoft.Extensions"] = "Error"
-                        }
                     }
+                },
+                Loggly = new
+                {
+                    ApplicationName = "My application name",
+                    ApiKey = "loggly-api-key"
                 }
             });
 
@@ -40,7 +36,11 @@ namespace StandardLogging
             {
                 logging.AddConfiguration(configuration.GetSection("Logging"));
 
-                logging.AddConsole();
+                logging.AddLoggly(configuration.GetSection("Loggly"), loggly =>
+                {
+                    // customize the provider
+                    loggly.SuppressExceptions = false;
+                });
             });
 
             var serviceProvider = services.BuildServiceProvider();
@@ -59,5 +59,7 @@ namespace StandardLogging
             Console.WriteLine("Press ENTER to exit");
             Console.ReadLine();
         }
+
     }
 }
+
