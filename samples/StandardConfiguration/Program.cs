@@ -7,6 +7,8 @@ namespace NetExtensions
 {
     class Program
     {
+        // dotnet run -- <Demo>
+        // e.g. dotnet run -- FileJson
         static Task<int> Main(string[] args) => CommandLineApplication.ExecuteAsync<Program>(args);
 
         [Argument(0, "Demo", "Select the demo to run")]
@@ -28,8 +30,6 @@ namespace NetExtensions
 
                 Demo.FileIni => ConfigurationSamples.FileIni(),
 
-                Demo.KeyPerFile => ConfigurationSamples.KeyPerFile(),
-
                 _ => throw new NotSupportedException()
             };
 
@@ -50,6 +50,5 @@ namespace NetExtensions
         FileXml,
         FileJson,
         FileIni,
-        KeyPerFile,
     }
 }

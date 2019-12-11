@@ -73,17 +73,6 @@ namespace NetExtensions
             return configuration;
         }
 
-        public static IConfigurationRoot KeyPerFile()
-        {
-            var configurationBuilder = new ConfigurationBuilder();
-
-            // ... add providers
-
-            var configuration = configurationBuilder.Build();
-
-            return configuration;
-        }
-
         public static IConfigurationRoot EnvironmentVariables()
         {
             var configurationBuilder = new ConfigurationBuilder();
